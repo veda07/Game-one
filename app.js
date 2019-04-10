@@ -18,7 +18,7 @@ class Player {
 
 
 		// description: 'defend against enemy shooter with player sheild';
-		// press spacebar to defelect arrow back toward shooter 
+	
 } 
 
 const playerOne = new Player (
@@ -31,7 +31,7 @@ const playerOne = new Player (
 
 class Shooter {
 	constructor(health, damage, top, left){
-		this.health = health;
+		this.health = health; // does not use the health or damage at this point in time
 		this.damage = damage;
 		this.top = top;
 		this.left= left;
@@ -39,13 +39,7 @@ class Shooter {
 
 	}
 }
-	// attack(Player){
-	// 	if(Math.random() > .70){
-	// 		Player.health = Player.health - this.damage
-	// 	}
-	// 	if (Player.health > 0){
-	// 		Player.defend(this)
-	// 	}
+
 
 const shooterOne = new Shooter (
 	25, // Health
@@ -86,13 +80,14 @@ function anim(e) {
     if(e.keyCode == 76){
     	// alert($(document).width());
     	// alert(playerOne.left);
-    	// alert(Math.floor(Math.random() * (7 - 0) + 1));
+    	
     }
     if (e.keyCode == 32){
     	// playerDeflect();
     	if(shield == 0){
     		shield = 12; 
     		$('#player').css('border-top', '4px solid gray')
+    		// press spacebar to defelect arrow back toward shooter
     	}
     	
     }
@@ -104,9 +99,10 @@ document.onkeydown = anim;
 
 function animateShooter() {
 
-	if($('#shooter').position().left == 0 ){
+	// getting the shooter to move back and fourth across the screen as the game continues
+	if($('#shooter').position().left == 0 ){ 
 		$( "#shooter" ).animate({
-	 		left: $('#container').width()- $('#shooter').width()
+	 		left: $('#container').width()- $('#shooter').width() // keeping the shooter within the container
 		}, 6000, function(){
 			animateShooter();
 		})
@@ -136,100 +132,76 @@ function startShooting(){
 		}
 
 		var random = Math.floor(Math.random() * (4 - 0) + 1);
-		// alert(random);
+		
 		if( parseInt(random) == 2){
 			// if Math.random hits 2 a bullet will be shot to players location 
 			var bullet = '<div class="bullet' + bulletNumber + ' " style="left:' + $('#shooter').offset().left + 'px "></div>'
 			// giving each bullet its individual id 
 			$('#shooter').after(bullet)
 			
-			// console.log('before ' + bulletNumber)
-			
 			$('.bullet' + bulletNumber).animate({
 				top: $('#container').height()- $('.bullet' + bulletNumber).height() -$('#player').height(),
 				left: playerOne.left + $('#player').width()/2 
 
-			}, 3000, "linear", function(){
-				// when bullet hits ground
+			}, 3000, "linear", function(){ // when bullet hits the gorund
+				
 				var left = playerOne.left;
 				var right = left + $('#player').width();
 				
 
-				if($(this).offset().left > left && $(this).offset().left < right){ // bullet hit player
-					if(shield < 6){
-						var health = $('#health span').text()
-						$('#health span').html(parseInt(health)-5)
+		if($(this).offset().left > left && $(this).offset().left < right){ // bullet hit player
+			if(shield < 6){
+				var health = $('#health span').text()
+				$('#health span').html(parseInt(health)-5)
 						
-						if(health == 5){
-							$('.game-over-lose').show();
+			if(health == 5){
+				$('.game-over-lose').show();
 
-							clearInterval(gameOn);
-						}
-					} else { 
-						console.log('shield up')
-						var bullet = '<div class="bulletDeflected' + bulletNumber + '" style="top:' + $(this).offset().top + 'px ; left:' + $(this).offset().left + 'px "></div>'
-						$('#container').append(bullet)
+				clearInterval(gameOn);
+			}
+			} else { 
+				console.log('shield up')
+				var bullet = '<div class="bulletDeflected' + bulletNumber + '" style="top:' + $(this).offset().top + 'px ; left:' + $(this).offset().left + 'px "></div>'
+				$('#container').append(bullet)
 
-						$('.bulletDeflected' + bulletNumber).animate({
-							top: $('#shooter').offset().top,
-							left: Math.floor(Math.random() * (containerWidth - 0) + 1)
+				$('.bulletDeflected' + bulletNumber).animate({
+					top: $('#shooter').offset().top,
+					// deflecting bullet at a ranomd location back to the top of the screen 
+					left: Math.floor(Math.random() * (containerWidth - 0) + 1) 
 
-							}, 3000, function(){ // after animation when bullet deflected reaches the top of container 
+				}, 3000, function(){ // after animation when bullet deflected reaches the top of container 
 								
 								
 								
-								var right = $('#shooter').offset().left + $('#shooter').width()+60;
+				var right = $('#shooter').offset().left + $('#shooter').width()+50;
 
-								if($(this).offset().left > ($('#shooter').offset().left -60) && $(this).offset().left < right ) { // bullet hit shooter
-									$('.game-over-win').show();
-									clearInterval(gameOn);
+				if($(this).offset().left > ($('#shooter').offset().left -50) && $(this).offset().left < right ) { // bullet hit shooter
+					$('.game-over-win').show();
+					clearInterval(gameOn);
 
-								}
-								$(this).remove();
-							});
 					}
-				}
+			
+					$(this).remove();
+		
+				});
+			
+			}
+	 
+	 	  }
 				
-				$(this).remove();
-				// console.log('after ' + bulletNumber);
+	 
+	  	 $(this).remove();
 
-			})
+  
+  	  })
 
-				// alert(playerOne.top);
-			bulletNumber++; 
-			// console.log('shooting');
-		}
+     bulletNumber++; 
+   }
 		
 
 	}, 500);
 
-
-
 }
-
-
-function playerDeflect(){
-	 
-var bulletNumber = 1; 
-var bullet = '<div class="bullet' + bulletNumber + ' " style="left:' + playerOne.left + 'px "></div>'
-
-	
-const bullets = $('.bullet') 
-
-$('.bullet').each((bullets) => {})
-for(let i =0; i < bullets.length; i++){
-	console.log(bullets[i]);
-	bullets[i].position();
-
-	if(playerOne.left == bullets[i].position())
-			$(bullets[i]).animate({
-
-			})
-
-	}
-  }
-
-
 
 
 
@@ -237,7 +209,7 @@ for(let i =0; i < bullets.length; i++){
 $(document).ready(function(){
 	animateShooter();
 	startShooting();
-	playerDeflect();
+	
 });	
 
 
