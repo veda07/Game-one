@@ -1,0 +1,68 @@
+
+
+#container{
+	height: 600px;
+	width: 100%;
+	position: relative;
+	outline: 1px solid black;
+	border-style:double;
+
+}
+
+#player{
+	position: absolute;
+	top:92%;
+	left: 0;
+
+	
+
+}
+
+#shooter{
+position:absolute;
+/*height:25px;
+width:25px;
+border-radius: 35px;
+outline: 1px solid black;
+background-color: red;*/
+/*attach image*/
+
+}
+
+div[class^="bullet"] {
+	/*ending with 'bullet'*/
+	width: 10px;
+	height: 10px;
+	border-radius: 25px;
+	background-color: black;
+	position:absolute;
+}
+@font-face {
+	font-family: calculator;
+	src: URL("../images/Calculator.ttf"); format('truetype');
+}
+.displayStats{
+	color: red;
+	font-family: calculator;
+	font-weight: 20px;
+	font-size: 25px;
+}
+
+@font-face {
+	font-family: alien;
+	 src: URL("../images/Alien-Encounters-Italic.ttf") format('truetype');
+}
+
+.game-over-lose,
+.game-over-win {
+	display: none;
+	position: absolute;
+	font-size: 40px;
+	font-family: alien;
+	top: 150px;
+	width: 100%;
+	text-align: center;
+
+
+}
+ 
