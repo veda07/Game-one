@@ -4,7 +4,7 @@ console.log('READY')
 
 
 const containerWidth = $('#container').width();
-var shield = 0; // shows if sheild is in use or not 
+let shield = 0; // shows if sheild is in use or not 
 
 class Player {
 	constructor(health, damage, top, left){
@@ -50,9 +50,9 @@ const shooterOne = new Shooter (
 
 
 
-var playerLoc=document.getElementById('player');
+let playerLoc=document.getElementById('player');
 //var shooter = document.getElementById('shooter');
-var container=document.getElementById('container'); 
+let container=document.getElementById('container'); 
 
 
 
@@ -119,9 +119,9 @@ function animateShooter() {
 
 
 function startShooting(){
-	var bulletNumber = 1;
+	let bulletNumber = 1;
 
-	var gameOn = setInterval(function(){
+	let gameOn = setInterval(function(){
 		
 		if(shield > 0 ){
 			shield--; 
@@ -131,11 +131,11 @@ function startShooting(){
 			}
 		}
 
-		var random = Math.floor(Math.random() * (4 - 0) + 1);
+		let random = Math.floor(Math.random() * (4 - 0) + 1);
 		
 		if( parseInt(random) == 2){
 			// if Math.random hits 2 a bullet will be shot to players location 
-			var bullet = '<div class="bullet' + bulletNumber + ' " style="left:' + $('#shooter').offset().left + 'px "></div>'
+			let bullet = '<div class="bullet' + bulletNumber + ' " style="left:' + $('#shooter').offset().left + 'px "></div>'
 			// giving each bullet its individual id 
 			$('#shooter').after(bullet)
 			
@@ -145,13 +145,13 @@ function startShooting(){
 
 			}, 3000, "linear", function(){ // when bullet hits the gorund
 				
-				var left = playerOne.left;
-				var right = left + $('#player').width();
+				let left = playerOne.left;
+				let right = left + $('#player').width();
 				
 
 		if($(this).offset().left > left && $(this).offset().left < right){ // bullet hit player
 			if(shield < 6){
-				var health = $('#health span').text()
+				let health = $('#health span').text()
 				$('#health span').html(parseInt(health)-5)
 						
 			if(health == 5){
@@ -161,7 +161,7 @@ function startShooting(){
 			}
 			} else { 
 				console.log('shield up')
-				var bullet = '<div class="bulletDeflected' + bulletNumber + '" style="top:' + $(this).offset().top + 'px ; left:' + $(this).offset().left + 'px "></div>'
+				let bullet = '<div class="bulletDeflected' + bulletNumber + '" style="top:' + $(this).offset().top + 'px ; left:' + $(this).offset().left + 'px "></div>'
 				$('#container').append(bullet)
 
 				$('.bulletDeflected' + bulletNumber).animate({
@@ -173,7 +173,7 @@ function startShooting(){
 								
 								
 								
-				var right = $('#shooter').offset().left + $('#shooter').width()+50;
+				let right = $('#shooter').offset().left + $('#shooter').width()+50;
 
 				if($(this).offset().left > ($('#shooter').offset().left -50) && $(this).offset().left < right ) { // bullet hit shooter
 					$('.game-over-win').show();
